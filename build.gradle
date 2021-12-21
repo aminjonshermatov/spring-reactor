@@ -30,4 +30,5 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	exclude 'com/learnreactivespring/fluxandmonoplayground/**'
 }
