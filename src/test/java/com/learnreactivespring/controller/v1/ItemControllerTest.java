@@ -4,7 +4,6 @@ import com.learnreactivespring.constants.ItemConstants;
 import com.learnreactivespring.document.Item;
 import com.learnreactivespring.repository.ItemReactiveRepository;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.util.Arrays;
@@ -113,6 +113,59 @@ public class ItemControllerTest {
     @Test
     public void getOneItem_notFound() {
         webTestClient.get().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABCD")
+                .exchange()
+                .expectStatus().isNotFound();
+    }
+
+    @Test
+    public void createItem() {
+        Item item = new Item(null, "IPhone 13", 999.99);
+
+        webTestClient.post().uri(VERSION + ItemConstants.ITEM_ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus().isCreated()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.id").isNotEmpty()
+                .jsonPath("$.description").isEqualTo(item.getDescription())
+                .jsonPath("$.price").isEqualTo(item.getPrice());
+    }
+
+    @Test
+    public void deleteItem() {
+        webTestClient.delete().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABC")
+                .accept(MediaType.APPLICATION_JSON)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody(Void.class);
+    }
+
+    @Test
+    public void updateItem() {
+        Double newPrice = 159.99;
+        Item item = new Item(null, "Beats HeadPhones", newPrice);
+
+        webTestClient.put().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABC")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
+                .exchange()
+                .expectStatus().isOk()
+                .expectBody()
+                .jsonPath("$.price").isEqualTo(newPrice);
+    }
+
+    @Test
+    public void updateItem_notFound() {
+        Double newPrice = 159.99;
+        Item item = new Item(null, "Beats HeadPhones", newPrice);
+
+        webTestClient.put().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABCD")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .body(Mono.just(item), Item.class)
                 .exchange()
                 .expectStatus().isNotFound();
     }

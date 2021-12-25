@@ -14,7 +14,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@WebFluxTest
+@WebFluxTest(controllers = FluxAndMonoController.class)
 public class FluxAndMonoControllerTest {
     @Autowired
     WebTestClient webTestClient;
