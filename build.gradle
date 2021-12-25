@@ -24,7 +24,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test:2.6.1'
-	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.2.3'
+	testImplementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo:3.2.4'
 	testImplementation 'io.projectreactor:reactor-test:3.4.13'
 }
 
