@@ -42,7 +42,7 @@ public class ItemControllerTest {
                 new Item(null, "Samsung TV", 400.00),
                 new Item(null, "LG TV", 420.00),
                 new Item(null, "Apple Watch", 499.00),
-                new Item(null, "Beats HeadPhones", 149.99)
+                new Item("ABC", "Beats HeadPhones", 149.99)
         );
     }
 
@@ -98,5 +98,22 @@ public class ItemControllerTest {
                 .expectNextCount(4)
                 .expectComplete()
                 .verify();
+    }
+
+    @Test
+    public void getOneItem() {
+        webTestClient.get().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABC")
+                .exchange()
+                .expectStatus().isOk()
+                .expectHeader().contentType(MediaType.APPLICATION_JSON)
+                .expectBody()
+                .jsonPath("$.price", 149.99);
+    }
+
+    @Test
+    public void getOneItem_notFound() {
+        webTestClient.get().uri(VERSION + ItemConstants.ITEM_ENDPOINT + "/ABCD")
+                .exchange()
+                .expectStatus().isNotFound();
     }
 }
