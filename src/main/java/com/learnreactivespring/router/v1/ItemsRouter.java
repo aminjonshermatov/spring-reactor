@@ -37,14 +37,15 @@ public class ItemsRouter {
                 .andRoute(
                         PUT(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/{id}").and(accept(MediaType.APPLICATION_JSON)),
                         itemsHandler::updateItem
+                )
+                .andRoute(
+                        GET(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/runtimeException").and(accept(MediaType.APPLICATION_JSON)),
+                        itemsHandler::itemsEx
+                )
+                .andRoute(
+                        GET(VERSION + ItemConstants.ITEM_STREAM_FUNCTIONAL_ENDPOINT).and(accept(MediaType.APPLICATION_JSON)),
+                        itemsHandler::itemsStream
                 );
     }
 
-    @Bean
-    public RouterFunction<ServerResponse> errorRoute(ItemsHandler itemsHandler) {
-        return RouterFunctions.route(
-                GET(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/runtimeException").and(accept(MediaType.APPLICATION_JSON)),
-                itemsHandler::itemsEx
-        );
-    }
 }
