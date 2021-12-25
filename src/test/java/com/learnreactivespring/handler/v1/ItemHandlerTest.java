@@ -133,4 +133,15 @@ public class ItemHandlerTest {
                 .exchange()
                 .expectStatus().isNotFound();
     }
+
+    /*
+    @Test
+    public void runtimeException() {
+        webTestClient.get().uri(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/runtimeException")
+                .exchange()
+                .expectStatus().is5xxServerError()
+                .expectBody()
+                .jsonPath("$.message").isEqualTo("Runtime exception occurred functional");
+    }
+    */
 }
