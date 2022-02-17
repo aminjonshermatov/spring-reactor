@@ -36,10 +36,10 @@ public class ItemHandlerTest {
 
     public static List<Item> data() {
         return Arrays.asList(
-                new Item(null, "Samsung TV", 400.00),
-                new Item(null, "LG TV", 420.00),
-                new Item(null, "Apple Watch", 499.00),
-                new Item("ABC", "Beats HeadPhones", 149.99)
+                new Item(null, "Samsung TV", "TV", 400.00),
+                new Item(null, "LG TV", "TV", 420.00),
+                new Item(null, "Apple Watch", "Watch", 499.00),
+                new Item("ABC", "Beats HeadPhones", "HeadPhone", 149.99)
         );
     }
 
@@ -83,7 +83,7 @@ public class ItemHandlerTest {
 
     @Test
     public void createItem() {
-        Item item = new Item(null, "IPhone 13", 999.99);
+        Item item = new Item(null, "IPhone 13", "Phone", 999.99);
 
         webTestClient.post().uri(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -109,7 +109,7 @@ public class ItemHandlerTest {
     @Test
     public void updateItem() {
         Double newPrice = 159.99;
-        Item item = new Item(null, "Beats HeadPhones", newPrice);
+        Item item = new Item(null, "Beats HeadPhones", "HeadPhone", newPrice);
 
         webTestClient.put().uri(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/ABC")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -124,7 +124,7 @@ public class ItemHandlerTest {
     @Test
     public void updateItem_notFound() {
         Double newPrice = 159.99;
-        Item item = new Item(null, "Beats HeadPhones", newPrice);
+        Item item = new Item(null, "Beats HeadPhones", "HeadPhone", newPrice);
 
         webTestClient.put().uri(VERSION + ItemConstants.ITEM_FUNCTIONAL_ENDPOINT + "/ABCD")
                 .contentType(MediaType.APPLICATION_JSON)

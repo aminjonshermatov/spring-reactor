@@ -48,16 +48,16 @@ public class ItemDataInitializer implements CommandLineRunner {
 
     public List<Item> data() {
         return Arrays.asList(
-                new Item(null, "Samsung TV", 400.00),
-                new Item(null, "LG TV", 420.00),
-                new Item(null, "Apple Watch", 499.00),
-                new Item("abc", "Beats HeadPhones", 149.99)
+                new Item(null, "Samsung TV", "TV", 400.00),
+                new Item(null, "LG TV", "TV", 420.00),
+                new Item(null, "Apple Watch", "Watch", 499.00),
+                new Item("abc", "Beats HeadPhones", "HeadPhone", 149.99)
         );
     }
 
     private void dataSetupForCappedCollection() {
         Flux<ItemCapped> itemCappedFlux = Flux.interval(Duration.ofSeconds(1))
-                .map(idx -> new ItemCapped(null, "Random item " + idx, (100.0 + idx)));
+                .map(idx -> new ItemCapped(null, "Random item " + idx, "Item", (100.0 + idx)));
 
         itemReactiveCappedRepository
                 .insert(itemCappedFlux)

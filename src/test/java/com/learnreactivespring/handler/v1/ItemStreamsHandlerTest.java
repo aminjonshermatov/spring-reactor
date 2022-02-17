@@ -39,7 +39,7 @@ public class ItemStreamsHandlerTest {
 
     public static Flux<ItemCapped> data() {
         return Flux.interval(Duration.ofSeconds(1))
-                .map(idx -> new ItemCapped(null, "Random item " + idx, (100.0 + idx)))
+                .map(idx -> new ItemCapped(null, "Random item " + idx, "Item", (100.0 + idx)))
                 .take(5);
     }
 

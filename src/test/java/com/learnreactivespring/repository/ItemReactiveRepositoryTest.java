@@ -20,10 +20,10 @@ public class ItemReactiveRepositoryTest {
     ItemReactiveRepository itemReactiveRepository;
 
     List<Item> itemList = Arrays.asList(
-            new Item(null, "Samsung TV", 400.00),
-            new Item(null, "LG TV", 420.00),
-            new Item(null, "Apple Watch", 499.00),
-            new Item(null, "Beats HeadPhones", 149.99)
+            new Item(null, "Samsung TV", "TV", 400.00),
+            new Item(null, "LG TV", "TV", 420.00),
+            new Item(null, "Apple Watch", "Watch",499.00),
+            new Item(null, "Beats HeadPhones", "HeadPhone", 149.99)
     );
 
     @BeforeEach
@@ -64,7 +64,7 @@ public class ItemReactiveRepositoryTest {
 
     @Test
     public void saveItem() {
-        Item itemForSave = new Item(null, "Google Home Mini", 39.00);
+        Item itemForSave = new Item(null, "Google Home Mini", "Assistant", 39.00);
         Mono<Item> savedItem = itemReactiveRepository.save(itemForSave);
 
         StepVerifier.create(savedItem)
